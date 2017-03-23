@@ -55,36 +55,6 @@ namespace PrismViewModelFirst.Services
             var uri = new Uri(typeof(MainContainerDummyViewModel).FullName + parameters, UriKind.RelativeOrAbsolute);
             regionManager.RequestNavigate("MainRegion", uri, HandleNavigationCallback);
         }
-
-
-        private void ShowSpecificMainContainerViewModel(ShowSpecificMainContainerViewModelMessage message)
-        {
-
-            if (mainContainerCounter == 1)
-            {
-                messageBoxService.ShowInformation("You need to add a Main container viewmodel first");
-                return;            
-            }
-
-            int value = -1;
-            if (!int.TryParse(message.Content, out value))
-            {
-                messageBoxService.ShowError(string.Format("Specific ViewModel value must be an integer between 1-{0}", mainContainerCounter));
-                return;
-            }
-
-            if (value <= 0 || value > mainContainerCounter)
-            {
-                messageBoxService.ShowError(string.Format("Specific ViewModel value must be an integer between 1-{0}", mainContainerCounter));
-                return;
-            }
-
-            UriQuery parameters = new UriQuery();
-            parameters.Add("ID", message.Content);
-
-            var uri = new Uri(typeof(MainContainerDummyViewModel).FullName + parameters, UriKind.RelativeOrAbsolute);
-            regionManager.RequestNavigate("MainRegion", uri, HandleNavigationCallback);
-        }
         #endregion
 
         #region Child container navigation
@@ -113,6 +83,38 @@ namespace PrismViewModelFirst.Services
 
             //use the custom extension methods to specify our own container to use
             regionManager.RequestNavigateUsingSpecificContainer("MainRegion", uri, HandleNavigationCallback, childcontainer);
+        }
+
+        #endregion
+
+        #region ShowSpecificMainContainer
+        private void ShowSpecificMainContainerViewModel(ShowSpecificMainContainerViewModelMessage message)
+        {
+
+            if (mainContainerCounter == 1)
+            {
+                messageBoxService.ShowInformation("You need to add a Main container viewmodel first");
+                return;
+            }
+
+            int value = -1;
+            if (!int.TryParse(message.Content, out value))
+            {
+                messageBoxService.ShowError(string.Format("Specific ViewModel value must be an integer between 1-{0}", mainContainerCounter));
+                return;
+            }
+
+            if (value <= 0 || value > mainContainerCounter)
+            {
+                messageBoxService.ShowError(string.Format("Specific ViewModel value must be an integer between 1-{0}", mainContainerCounter));
+                return;
+            }
+
+            UriQuery parameters = new UriQuery();
+            parameters.Add("ID", message.Content);
+
+            var uri = new Uri(typeof(MainContainerDummyViewModel).FullName + parameters, UriKind.RelativeOrAbsolute);
+            regionManager.RequestNavigate("MainRegion", uri, HandleNavigationCallback);
         }
 
         #endregion

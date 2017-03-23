@@ -17,7 +17,7 @@ namespace PrismViewModelFirst.ViewModels
 {
     public class ShellViewModel : INPCBase
     {
-
+        // 4 инициализации VM, подписка на прослушивание событий
         public ShellViewModel(IEventMessager eventMessager)
         {
 

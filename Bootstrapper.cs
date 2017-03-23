@@ -16,6 +16,7 @@ namespace PrismViewModelFirst
     {
         protected override DependencyObject CreateShell()
         {
+            // 2
             return this.Container.Resolve<Shell>();
         }
 
@@ -29,21 +30,27 @@ namespace PrismViewModelFirst
      
         protected override void ConfigureContainer()
         {
+            // 1
             base.ConfigureContainer();
             Container.RegisterType<ShellViewModel>(new TransientLifetimeManager());
+
+            //регистрируем сервисы
             Container.RegisterType<IEventMessager, EventMessager>(new ContainerControlledLifetimeManager());
             Container.RegisterType<IMessageBoxService, MessageBoxService>(new ContainerControlledLifetimeManager());
             Container.RegisterType<IMessageListener, MessageListener>(new ContainerControlledLifetimeManager());
 
             
-
+            //регистрируем стафф для навигации Prism
             //custom region stuff to support child container navigation
             Container.RegisterType<IRegionNavigationContentLoader, CustomRegionNavigationContentLoader>(new ContainerControlledLifetimeManager());
             Container.RegisterType<IRegionNavigationService, CustomRegionNavigationService>(new ContainerControlledLifetimeManager());
 
+            //регистрируем тип для навигации
             //this is how to use ViewModel 1st Unity registration
             Container.RegisterTypeForNavigation<MainContainerDummyViewModel>();
 
+
+            // получаем и запускам службу ообщений
             Container.Resolve<IMessageListener>().Start();
         }
     }

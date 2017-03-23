@@ -20,9 +20,11 @@ namespace PrismViewModelFirst
 {
     public partial class Shell : Window
     {
+        // 3 - ресолвим из контейнера ShellVM инициализируем ее
         public Shell(
             [Dependency] ShellViewModel viewModel)
         {
+            // присваиваем VM в качестве DataContext и инициализируем окно
             this.DataContext = viewModel;
             InitializeComponent();
         }
